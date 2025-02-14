@@ -5,16 +5,13 @@
     <title>Socket.IO chat</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socket = io();
+      const socket = io();     
       
-      const form = document.getElementById('form');
-      
-      const input = document.getElementById('input');
-
       document.addEventListener("DOMContentLoaded", function() {
 
         let form = document.querySelector("form"); // Seleciona o formulário
-        const input = document.getElementById('input'); 
+        const input = document.getElementById('input');         
+        const messages = document.getElementById('messages');
 
         form.addEventListener("submit", function(event) {
       
@@ -28,7 +25,20 @@
             input.value = '';
           }
         });
+
+        socket.on('chat message', (msg) => {
+          const item = document.createElement('li');
+          item.textContent = msg;
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+
+
       });
+
+      
+
+      
     </script>
     <style>
       body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
